@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Veux-tu être ma Valentine ?</title>
+    <title>Portfolio Rezi</title>
     <style>
         body {
             margin: 0; padding: 0;
@@ -37,7 +37,7 @@
 
         #btn-non {
             background-color: #adb5bd; color: white;
-            position: relative; /* Au début il reste dans le flux à côté du oui */
+            position: relative; 
             z-index: 999;
             transition: all 0.15s ease-out; touch-action: none;
         }
@@ -125,7 +125,6 @@
 
         function fuir() {
             if (!isFleeing) {
-                // Au premier mouvement, on passe en position fixed pour pouvoir bouger partout
                 btnNon.style.position = 'fixed';
                 isFleeing = true;
             }
