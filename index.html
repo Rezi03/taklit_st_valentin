@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Veux-tu être ma Valentine ?</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #ffe4e1;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        h1 { color: #d63384; padding: 0 20px; }
+
+        .mort { font-size: 4rem; margin-bottom: 20px; }
+
+        .btn-container {
+            position: relative;
+            width: 100%;
+            height: 200px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        #btn-oui {
+            background-color: #ff4d6d;
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        #btn-non {
+            background-color: #adb5bd;
+            color: white;
+            position: fixed; /* Fixé par rapport à l'écran pour mieux fuir */
+            z-index: 999;
+            transition: all 0.15s ease-out;
+            touch-action: none;
+        }
+
+        /* Page finale */
+        #page-felicitations {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: white;
+            z-index: 1000;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.5s;
+        }
+
+        #gif-valentine {
+            width: 250px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .coeur {
+            position: fixed;
+            color: #ff4d6d;
+            font-size: 20px;
+            animation: chute linear forwards;
+            z-index: 1001;
+        }
+
+        @keyframes chute {
+            to { transform: translateY(100vh) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="content">
+        <h1>Taklit, veux-tu être ma Valentine ?</h1>
+        <div class="mort">💀</div>
+        <div class="btn-container">
+            <button id="btn-oui">OUI !</button>
+            <button id="btn-non">Non</button>
+        </div>
+    </div>
+
+    <div id="page-felicitations">
+        <h1>Félicitations ! 🎉</h1>
+        <img src="assets/1.gif" alt="Amour" id="gif-valentine">
+        <p style="font-size: 1.5rem; color: #ff4d6d;">Félicitations, tu as l’honneur de sortir avec Rezi, le méga-mind BG !! 😎</p>
+    </div>
+
+    <script>
+        const non = document.getElementById('btn-non');
+        const oui = document.getElementById('btn-oui');
+        const final = document.getElementById('page-felicitations');
+
+        // Placement initial du bouton Non
+        non.style.top = (oui.offsetTop) + "px";
+        non.style.left = (oui.offsetLeft + 120) + "px";
+
+        function fuir() {
+            // Calcule une position aléatoire sécurisée sur l'écran
+            const padding = 50;
+            const newX = Math.random() * (window.innerWidth - non.offsetWidth - padding);
+            const newY = Math.random() * (window.innerHeight - non.offsetHeight - padding);
+            
+            non.style.left = `${newX}px`;
+            non.style.top = `${newY}px`;
+        }
+
+        // Détection mobile et desktop
+        non.addEventListener('mouseover', fuir);
+        non.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            fuir();
+        });
+
+        // Pluie de coeurs
+        function créerCoeur() {
+            const c = document.createElement('div');
+            c.classList.add('coeur');
+            c.innerHTML = '❤️';
+            c.style.left = Math.random() * 100 + 'vw';
+            c.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            final.appendChild(c);
+            setTimeout(() => c.remove(), 5000);
+        }
+
+        oui.addEventListener('click', () => {
+            final.style.display = 'flex';
+            setInterval(créerCoeur, 300);
+        });
+    </script>
+</body>
+</html>
